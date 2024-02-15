@@ -82,7 +82,10 @@ def create_deferring_foreign_related_manager(related, original_manager_cls):
             #
             # NOTE: _apply_rel_filters() must return a copy of the queryset
             # to work correctly with prefetch
-            return queryset._next_is_sticky().all()
+            """
+            Returns a copy of the queryset for compatibility with prefetch.
+            """
+            return queryset.all()
 
         def get_prefetch_queryset(self, instances, queryset=None):
             if queryset is None:
@@ -376,7 +379,10 @@ def create_deferring_forward_many_to_many_manager(rel, original_manager_cls):
 
         def _apply_rel_filters(self, queryset):
             # Required for get_prefetch_queryset.
-            return queryset._next_is_sticky()
+            """
+            Returns a copy of the queryset for compatibility with prefetch.
+            """
+            return queryset.all()
 
         def get_object_list(self):
             """
