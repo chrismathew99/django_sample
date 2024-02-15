@@ -411,6 +411,7 @@ class FakeQuerySet(object):
         new.dict_fields = self.dict_fields
         new.tuple_fields = self.tuple_fields
         new.iterable_class = self.iterable_class
+        new._prefetch_related_lookups = list(self._prefetch_related_lookups)
         return new
 
     def _get_filters(self, **kwargs):
@@ -433,7 +434,6 @@ class FakeQuerySet(object):
             if all([test(obj) for test in filters])
         ])
         return clone
-
     def exclude(self, **kwargs):
         filters = self._get_filters(**kwargs)
 
